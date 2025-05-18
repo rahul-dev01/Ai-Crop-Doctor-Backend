@@ -1,6 +1,7 @@
 const User = require("../models/user")
 const bcrypt = require("bcryptjs")
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
+const user = require("../models/user");
 
 const register = async (req, res) => {
     try {
@@ -8,8 +9,11 @@ const register = async (req, res) => {
 
         const existingUser = await User.findOne({ email })
         if (existingUser) {
+            console.log(`Attempted registration with existing email: ${email} and user id is : ${existingUser.id}`)
             return res.status(400).json({ error: "User already exits" })
+
         }
+        
 
         const hashPassword = await bcrypt.hash(password, 10)
 
@@ -17,6 +21,7 @@ const register = async (req, res) => {
         await newUser.save()
 
         res.status(201).json({ message: "User Resister successfully" })
+        console.log(`New user register with id : ${newUser._id}` )
 
     } catch (err) {
         res.status(500).json({ error: err.message })
@@ -46,6 +51,8 @@ const login = async (req, res) => {
                 email: user.email,
             }
         })
+
+        console.log(`User is login wiht id : ${user.id}` )
 
     } catch (err) {
         res.status(500).json({ error: err.message })
