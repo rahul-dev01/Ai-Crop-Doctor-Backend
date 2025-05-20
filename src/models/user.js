@@ -28,12 +28,8 @@ const UserSchema =  new mongoose.Schema (
         min_length : [6 , "Password must be atleast 6 character;"]
        } , 
 
-       createAt  : {
-        type : Date , 
-        default : Date.now
-       }
-
-    }
+    } ,
+     { timestamps: true } 
     
 )
 
