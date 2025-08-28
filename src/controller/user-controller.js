@@ -6,7 +6,7 @@ const user = require("../models/user");
 const register = async (req, res) => {
     try {
         let { first_name, last_name, email, password } = req.body;
-
+        
         const existingUser = await User.findOne({ email })
         if (existingUser) {
             console.log(`Attempted registration with existing email: ${email} and user id is : ${existingUser.id}`)
